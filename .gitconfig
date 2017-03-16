@@ -1,0 +1,88 @@
+[merge]
+	tool = kdiff3
+[mergetool "kdiff3"]
+	path = C:/Program Files/KDiff3/kdiff3.exe
+[diff]
+	guitool = kdiff3
+    compactionHeuristic = true
+[difftool "kdiff3"]
+	path = C:/Program Files/KDiff3/kdiff3.exe
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true
+[core]
+	editor = \"C:/Program Files (x86)/Notepad++/notepad++.exe\" -multiInst -nosession
+	autocrlf = True
+   	excludesfile = ~/.gitignore
+	attributesfile = ~/.gitattributes
+[user]
+	name = Victor Catalan
+	email = victor.catalan@aed-sicad.de
+[http]
+	postBuffer = 524288000
+    
+# rewrites of repo paths
+[url "git@github.com:"]
+	insteadOf = "https://github.com/"
+	pushInsteadOf = "github:"
+	pushInsteadOf = "git://github.com/"
+	pushInsteadOf = "https://github.com/"
+[url "git://github.com/"]
+	insteadOf = "github:"   
+    
+[alias]
+	c = commit -am
+	up = pull
+	p = push
+	s = status
+	sclone = clone --depth=1
+	co = checkout
+	df = diff --color --color-words --abbrev
+	    
+	# Show the diff between the latest commit and the current state
+	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+
+    # log
+    lg = log --oneline --all --graph --decorate
+    lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+    
+    # To Include
+	reup = rebase-update
+    gunstage=reset HEAD --
+    gundolast=reset HEAD~1
+    gstu=status -uno
+
+# push easily. http://stackoverflow.com/a/23918418/89484
+[push]
+	default = current
+    
+[pager]
+	# insanely beautiful diffs ==> npm install -g diff-so-fancy
+	diff = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
+	show = diff-so-fancy | less --tabs=4 -RFX
+    
+# so much color
+[color]
+	ui = always
+[color "diff"]
+	meta = yellow bold
+	commit = green bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = "red bold 52"
+	newNormal = "green bold"
+	newHighlight = "green bold 22"
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan

@@ -1,0 +1,37 @@
+{
+  // See http://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "0.1.0",
+	"command": "tsc",
+	"isShellCommand": true,
+	"args": ["-p", "."],
+	"showOutput": "silent",
+	"problemMatcher": "$tsc",
+  "compileOnSave": true,
+  "allowJs": true, // To enable JavaScript inside a TypeScript project 
+  "compilerOptions": {
+    "module": "amd",
+    "noImplicitAny": true,
+    "outDir": "built",
+    "removeComments": false,
+    "sourceMap": true,
+    "jsx": "react",
+    "reactNamespace": "jsxFactory",
+    "target": "es5",
+    "moduleResolution": "node",
+    "isolatedModules": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": false,
+    "noLib": false,
+    "preserveConstEnums": true,
+    "suppressImplicitAnyIndexErrors": true
+  },
+  "types": [ "arcgis-js-api", "dojo"],
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

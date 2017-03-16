@@ -1,0 +1,6 @@
+{
+  "globalDependencies": {
+    "arcgis-js-api": "registry:dt/arcgis-js-api#3.19.0+20161228012609",
+    "dojo": "registry:dt/dojo#1.9.0+20161106155238"
+  }
+}
