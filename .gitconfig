@@ -32,12 +32,16 @@
 	insteadOf = "github:"   
     
 [alias]
-	c = commit -am
-	up = pull
-	p = push
-	s = status
-	sclone = clone --depth=1
+    br = branch
+	cm = commit
 	co = checkout
+    up = pull
+	p = push
+	st = status
+	sclone = clone --depth=1
+	
+    new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+    who = shortlog -s --
 	df = diff --color --color-words --abbrev
 	    
 	# Show the diff between the latest commit and the current state
@@ -60,7 +64,7 @@
     
 [pager]
 	# insanely beautiful diffs ==> npm install -g diff-so-fancy
-	diff = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
+	diff = diff-so-fancy | less --tabs=4 -RFX  --pattern '^(Date|added|deleted|modified): '
 	show = diff-so-fancy | less --tabs=4 -RFX
     
 # so much color
