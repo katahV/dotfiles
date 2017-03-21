@@ -32,6 +32,7 @@
 	insteadOf = "github:"   
     
 [alias]
+    all = add -A
     br = branch
 	cm = commit
 	co = checkout
