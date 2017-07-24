@@ -1,93 +1,96 @@
-[merge]
-	tool = kdiff3
-[mergetool "kdiff3"]
-	path = C:/Program Files/KDiff3/kdiff3.exe
-[diff]
-	guitool = kdiff3
-    compactionHeuristic = true
-[difftool "kdiff3"]
-	path = C:/Program Files/KDiff3/kdiff3.exe
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	required = true
 [core]
-	editor = \"C:/Program Files (x86)/Notepad++/notepad++.exe\" -multiInst -nosession
 	autocrlf = True
-   	excludesfile = ~/.gitignore
-	attributesfile = ~/.gitattributes
-[user]
-	name = Victor Catalan
-	email = victor.catalan@aed-sicad.de
-[http]
-	postBuffer = 524288000
-    
-# rewrites of repo paths
-[url "git@github.com:"]
-	insteadOf = "https://github.com/"
-	pushInsteadOf = "github:"
-	pushInsteadOf = "git://github.com/"
-	pushInsteadOf = "https://github.com/"
-[url "git://github.com/"]
-	insteadOf = "github:"   
-    
-[alias]
-    all = add -A
-    br = branch
-	cm = commit
-	co = checkout
-    up = pull
-	p = push
-	st = status
-	sclone = clone --depth=1
-	
-    new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
-    who = shortlog -s --
-	df = diff --color --color-words --abbrev
-	    
-	# Show the diff between the latest commit and the current state
-	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+#	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	excludesfile = c:/Users/vcat/.gitignore
+	editor = 'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin
 
-    # log
-    lg = log --oneline --all --graph --decorate
-    lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-    
-    # To Include
-	reup = rebase-update
-    gunstage=reset HEAD --
-    gundolast=reset HEAD~1
-    gstu=status -uno
-
-# push easily. http://stackoverflow.com/a/23918418/89484
-[push]
-	default = current
-    
-[pager]
-	# insanely beautiful diffs ==> npm install -g diff-so-fancy
-	diff = diff-so-fancy | less --tabs=4 -RFX  --pattern '^(Date|added|deleted|modified): '
-	show = diff-so-fancy | less --tabs=4 -RFX
-    
-# so much color
 [color]
-	ui = always
-[color "diff"]
-	meta = yellow bold
-	commit = green bold
-	frag = magenta bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = "red bold 52"
-	newNormal = "green bold"
-	newHighlight = "green bold 22"
+	ui = auto
 [color "branch"]
 	current = yellow reverse
 	local = yellow
 	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
 [color "status"]
-	added = yellow
-	changed = green
+	added = green
+	changed = red
 	untracked = cyan
+
+[user]
+	name = Victor Catalan
+	email = v.catalan-diaz@geocom-informatik.de
+
+[alias]
+    br = branch -vv -ra
+	last = log -1 HEAD
+	ls = ls-files
+    st = status --short --branch
+	co = checkout
+	
+	mm = merge --no-ff
+    unstage = reset HEAD --
+	ec = config --global -e
+	
+    df = diff
+    dc = diff --cached
+	
+	# Logging
+	lg = git lg1
+    lg1 = !"git lg1-specific --all"
+    lg2 = !"git lg2-specific --all"
+    lg3 = !"git lg3-specific --all"
+
+    lg1-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
+    lg2-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+    lg3-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'
+	
+	# git FLOW katah
+	# Create branch local and remote
+	cb = !git checkout -b $1 && git push --set-upstream origin develop
+	# Update
+	up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+	# Commit changes & amend
+	cm = !git add -A" && "git commit
+	amend = commit -a --amend
+	# Save temporal & Undo
+	save = !git add -A && git commit -m 'SAVEPOINT'    
+	undo = reset HEAD~1 --mixed
+	# Clean and finish
+    bclean = "!f() { git branch --merged ${1-develop} | grep -v " ${1-develop}$" | xargs -r git branch -d; }; f"
+    bdone = "!f() { git checkout ${1-develop} && git up && git bclean ${1-develop}; }; f"
+
+[push]
+	default = simple
+
+[http]
+	sslverify = false
+
+[merge]
+#	tool = p4merge
+	tool = kdiff3
+[mergetool "kdiff3"]
+	path = C:/_Apps/Tools/kdiff3/kdiff3.exe
+[mergetool "p4merge"]
+	path = C:/_Apps/Tools/p4merge/p4merge.exe
+	cmd = p4merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+	keepTemporaries = false
+	trustExitCode = false
+	keepBackup = false
+
+[diff]
+#	tool = p4merge
+	guitool = kdiff3
+[difftool "kdiff3"]
+	path = C:/_tools/apps/kdiff/kdiff3.exe
+[difftool "p4merge"]
+	path = C:/_tools/apps/p4merge/p4merge.exe
+	cmd = \"p4merge.exe $LOCAL $REMOTE\"
+
+[credential]
+	helper = wincred
+#   helper = !\"C:\\Program Files\\GitExtensions\\GitCredentialWinStore\\git-credential-winstore.exe\"

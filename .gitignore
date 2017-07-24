@@ -1,0 +1,26 @@
+# Can ignore specific files
+.DS_Store
+
+# Use wildcards as well
+#*~
+
+# Can also ignore all directories and files in a directory.
+#tmp/**/*
+
+/bin/
+#obj/
+*/node_modules/**/*
+*/dist/**/*
+*/.vscode/**/*
+obj/Debug
+obj/Release
+
+*.suo
+*.user
+_ReSharper.*
+*.resharper
+
+NDependOut
+*.FxCopReport.xml
+StyleCop.Cache
+*/package-lock.json
