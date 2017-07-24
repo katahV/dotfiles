@@ -11,14 +11,16 @@ history=cat "%CMDER_ROOT%\config\.history"
 unalias=alias /d $1
 cmderr=cd /d "%CMDER_ROOT%"
 
-rl=reload
-aliases=cat D:\Development\Tools\cmder\config\.bashrc
+rl=reloadhistory
+aliases=cat C:\_Apps\cmder\config\.bashrc
 cr=cd "%CMDER_ROOT%"
 
 ls=ls --color=auto -p
 ll=ls -la
 
-# Easier navigation: .., ..., ...., ....., .4, .5, and ~
+g = git
+
+;= Easier navigation: .., ..., ...., ....., .4, .5, and ~
 ..=cd ..
 ...=cd ../..
 ....=cd ../../..
@@ -27,11 +29,14 @@ ll=ls -la
 .5=cd ../../../../..
 ~=cd ~/
 
-# Apps
+;= Apps
 e=explorer .
 vs=code .
 ns=npm start
+webapp=cat C:\_Apps\WebAppBuilderForArcGIS\startup.bat
 
-# Directories
-home=cd D:\Development\Sandboxes\
-githome=cd D:\Development\Sandboxes\Git
+;= Directories
+home=cd C:\users\vcat\
+sand=cd C:\_Development\Sandboxes\
+wab=cd "%WAB_HOME%"
+dev1=cd C:\_Development\Sandboxes\webApps
