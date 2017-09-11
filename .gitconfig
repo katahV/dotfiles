@@ -32,12 +32,11 @@
     st = status --short --branch
 	co = checkout
 	
-	mm = merge --no-ff
     unstage = reset HEAD --
 	ec = config --global -e
 	
     df = diff
-    dc = diff --cached
+    dc = diff --gd
 	
 	# Logging
 	lg = git lg1
@@ -63,6 +62,7 @@
 	# Clean and finish
     bclean = "!f() { git branch --merged ${1-develop} | grep -v " ${1-develop}$" | xargs -r git branch -d; }; f"
     bdone = "!f() { git checkout ${1-develop} && git up && git bclean ${1-develop}; }; f"
+	mm = merge --no-ff
 
 [push]
 	default = simple
@@ -94,3 +94,5 @@
 [credential]
 	helper = wincred
 #   helper = !\"C:\\Program Files\\GitExtensions\\GitCredentialWinStore\\git-credential-winstore.exe\"
+[credential "https://github.com"]
+	username = katahV
