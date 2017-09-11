@@ -32,8 +32,7 @@ g = git
 ;= Apps
 e=explorer .
 vs=code .
-ns=npm start
-webapp=cat C:\_Apps\WebAppBuilderForArcGIS\startup.bat
+run-server=http-server ./ -p 1337
 
 ;= Directories
 home=cd C:\users\vcat\
