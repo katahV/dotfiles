@@ -1,2 +1,2 @@
 # dotfiles
-A collection of DotFiles
+A collection of DotFiles by @katahV
