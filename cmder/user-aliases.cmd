@@ -32,7 +32,7 @@ g = git
 ;= Apps
 e=explorer .
 vs=code .
-run-server=http-server ./ -p 1337
+run-server=http-server ./ -p 2000
 
 ;= Directories
 home=cd C:\users\vcat\
