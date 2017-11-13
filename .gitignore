@@ -1,5 +1,7 @@
 # Can ignore specific files
 .DS_Store
+.npmignore
+.iml
 
 # Use wildcards as well
 #*~
@@ -12,6 +14,7 @@
 */node_modules/**/*
 */dist/**/*
 */.vscode/**/*
+*/.idea/**/*
 obj/Debug
 obj/Release
 
