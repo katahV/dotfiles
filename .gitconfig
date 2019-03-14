@@ -1,9 +1,8 @@
 [core]
-	autocrlf = True
+	autocrlf = true
 #	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
 	excludesfile = c:/Users/vcat/.gitignore
-	editor = 'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin
-
+	editor = 'C:/Program Files/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin
 [color]
 	ui = auto
 [color "branch"]
@@ -20,59 +19,69 @@
 	added = green
 	changed = red
 	untracked = cyan
-
 [user]
 	name = Victor Catalan
 	email = v.catalan-diaz@geocom-informatik.de
-
 [alias]
-    br = branch -vv -ra
+	br = branch -vv -ra
 	last = log -1 HEAD
 	ls = ls-files
-    st = status --short --branch
+	st = status --short --branch
 	co = checkout
-	
-    unstage = reset HEAD --
+		
 	ec = config --global -e
-	
-    df = diff
-    dc = diff --gd
+	df = diff --no-pager
+	dc = diff --gd
 	
 	# Logging
-	lg = git lg1
-    lg1 = !"git lg1-specific --all"
-    lg2 = !"git lg2-specific --all"
-    lg3 = !"git lg3-specific --all"
-
-    lg1-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
-    lg2-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
-    lg3-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'
+	lg = !git lg1-specific --all
+	lg1 = !git lg1-specific --all
+	lg2 = !git lg2-specific --all
+	lg3 = !git lg3-specific --all
+	lg1-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
+	lg2-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+	lg3-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'
 	
-	# git FLOW katah
+	## git FLOW katah
 	# Create branch local and remote
-	cb = !git checkout -b $1 && git push --set-upstream origin develop
+	cb = !git checkout -b $1 && git push --set-upstream \"origin/$1\"
+	cbdevelop = checkout -b develop \"origin/develop\"
+	cbmaster = checkout -b master \"origin/master\"
+	
 	# Update
 	up = !git pull --rebase --prune $@ && git submodule update --init --recursive
 	# Commit changes & amend
-	cm = !git add -A" && "git commit
-	amend = commit -a --amend
+	cm = !git add -A && git commit	
+	amend = commit -a --amend --no-edit
+	# Fix last commit message
+	fix = commit --amend
 	# Save temporal & Undo
-	save = !git add -A && git commit -m 'SAVEPOINT'    
+	save = !git add -A && git commit -m 'SAVEPOINT'
 	undo = reset HEAD~1 --mixed
 	# Clean and finish
-    bclean = "!f() { git branch --merged ${1-develop} | grep -v " ${1-develop}$" | xargs -r git branch -d; }; f"
-    bdone = "!f() { git checkout ${1-develop} && git up && git bclean ${1-develop}; }; f"
-	mm = merge --no-ff
-
+	bclean = \"!f() { git branch --merged ${1-develop} | grep -v \" ${1-develop}$\" | xargs -r git branch -d; }; f\"
+	bdone = \"!f() { git checkout ${1-develop} && git up && git bclean ${1-develop}; }; f\"
+	bcleanmaster = \"!f() { git branch --merged ${1-master} | grep -v \" ${1-master}$\" | xargs -r git branch -d; }; f\"
+	bdonemaster = \"!f() { git checkout ${1-master} && git up && git bcleanmaster ${1-master}; }; f\"
+	# Merge
+	mm = !git pull && git merge --no-ff
+	m = merge
+	# Maintenance
+	compress = !git reflog expire --all --expire=now && git gc --prune=now --aggressive
+	# Fix issues, reset, etc
+	unstage = reset HEAD --
+	info = reflog
+	resetdevelop = !git reset --hard $1 && git push -f origin develop
+	resetmaster = !git reset --hard $1 && git push -f origin master	
+	resetindex = reset HEAD@{$1}
+	
 [push]
 	default = simple
-
 [http]
 	sslverify = false
-
 [merge]
 #	tool = p4merge
-	tool = kdiff3
+	tool = WinMerge
 [mergetool "kdiff3"]
 	path = C:/_Apps/Tools/kdiff3/kdiff3.exe
 [mergetool "p4merge"]
@@ -81,18 +90,23 @@
 	keepTemporaries = false
 	trustExitCode = false
 	keepBackup = false
-
+[mergetool "WinMerge"]
+	path = c:/Program Files/winmerge/winmergeu.exe
 [diff]
 #	tool = p4merge
 	guitool = kdiff3
 [difftool "kdiff3"]
-	path = C:/_tools/apps/kdiff/kdiff3.exe
+	path = C:/_Apps/Tools/kdiff3/kdiff3.exe
 [difftool "p4merge"]
 	path = C:/_tools/apps/p4merge/p4merge.exe
 	cmd = \"p4merge.exe $LOCAL $REMOTE\"
-
 [credential]
-	helper = wincred
-#   helper = !\"C:\\Program Files\\GitExtensions\\GitCredentialWinStore\\git-credential-winstore.exe\"
+	helper = store
+[credential "https://git01.eggits.net"]
+	username = vcat
 [credential "https://github.com"]
-	username = katahV
+    username = katahV
+	useHttpPath = true
+[winUpdater]
+	recentlySeenVersion = 2.20.1.windows.1
+
