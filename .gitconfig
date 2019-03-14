@@ -102,11 +102,10 @@
 	cmd = \"p4merge.exe $LOCAL $REMOTE\"
 [credential]
 	helper = store
-[credential "https://git01.eggits.net"]
-	username = vcat
 [credential "https://github.com"]
     username = katahV
 	useHttpPath = true
+	
 [winUpdater]
 	recentlySeenVersion = 2.20.1.windows.1
 
