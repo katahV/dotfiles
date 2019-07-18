@@ -4,38 +4,39 @@
 ;= rem In batch mode, jump to the end of the file
 ;= goto:eof
 ;= Add aliases below here
-
 pwd=cd
 clear=cls
 history=cat "%CMDER_ROOT%\config\.history"
 unalias=alias /d $1
-cmderr=cd /d "%CMDER_ROOT%"
-
+aliases=cat C:\_Apps\cmder\config\user-aliases.cmd
 rl=reloadhistory
-aliases=cat C:\_Apps\cmder\config\.bashrc
-cr=cd "%CMDER_ROOT%"
-
 ls=ls --color=auto -p
 ll=ls -la
 
-g = git
-
-;= Easier navigation: .., ..., ...., ....., .4, .5, and ~
+;= Easier navigation
 ..=cd ..
 ...=cd ../..
 ....=cd ../../..
 .....=cd ../../../..
 .4=cd ../../../..
 .5=cd ../../../../..
-~=cd ~/
+
+;= Directories
+cmderr=cd /d "%CMDER_ROOT%"
+home=cd C:\users\vcat\
+sand=cd C:\_Development\Sandboxes\
+wab=cd "%WAB_HOME%" & startup.bat
 
 ;= Apps
 e=explorer .
 vs=code .
-run-server=http-server ./ -p 2000
 
-;= Directories
-home=cd C:\users\vcat\
-sand=cd C:\_Development\Sandboxes\
-wab=cd "%WAB_HOME%"
-dev1=cd C:\_Development\Sandboxes\webApps
+;= Dev
+g=git $*
+run-server=lite-server -c %HOME%/bs-config.json
+browser-sync=browser-sync start --server --directory --files "*.html, js/*.js, css/*.css"
+run-jetty=mvn jetty:run -Denv=dev
+clean-run-jetty=mvn clean jetty:run -Denv=dev
+
+build-gloris=mvn clean install -P compress,upload-bundles-and-apps
+build-cpmrisk=mvn clean install -P compress,upload

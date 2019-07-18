@@ -11,12 +11,12 @@
 
 /bin/
 #obj/
-*/node_modules/**/*
-*/dist/**/*
-*/.vscode/**/*
-*/.idea/**/*
 obj/Debug
 obj/Release
+**/node_modules/**
+**/dist/**
+**/.vscode/**
+**/.idea/**
 
 *.suo
 *.user

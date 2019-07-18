@@ -27,6 +27,7 @@
 	last = log -1 HEAD
 	ls = ls-files
 	st = status --short --branch
+	tags = git describe --tags --abbrev=0
 	co = checkout
 		
 	ec = config --global -e
@@ -44,13 +45,13 @@
 	
 	## git FLOW katah
 	# Create branch local and remote
-	cb = !git checkout -b $1 && git push --set-upstream \"origin/$1\"
-	cbdevelop = checkout -b develop \"origin/develop\"
-	cbmaster = checkout -b master \"origin/master\"
+	cb = !git checkout -b $1 && git push --set-upstream "origin/$1"
+	cbdevelop = checkout -b develop "origin/develop"
+	cbmaster = checkout -b master "origin/master"
 	
 	# Update
 	up = !git pull --rebase --prune $@ && git submodule update --init --recursive
-	# Commit changes & amend
+	# Commit / Amend / Fix
 	cm = !git add -A && git commit	
 	amend = commit -a --amend --no-edit
 	# Fix last commit message
@@ -59,10 +60,10 @@
 	save = !git add -A && git commit -m 'SAVEPOINT'
 	undo = reset HEAD~1 --mixed
 	# Clean and finish
-	bclean = \"!f() { git branch --merged ${1-develop} | grep -v \" ${1-develop}$\" | xargs -r git branch -d; }; f\"
-	bdone = \"!f() { git checkout ${1-develop} && git up && git bclean ${1-develop}; }; f\"
-	bcleanmaster = \"!f() { git branch --merged ${1-master} | grep -v \" ${1-master}$\" | xargs -r git branch -d; }; f\"
-	bdonemaster = \"!f() { git checkout ${1-master} && git up && git bcleanmaster ${1-master}; }; f\"
+	bclean = "!f() { git branch --merged ${1-develop} | grep -v " ${1-develop}$" | xargs -r git branch -d; }; f"
+	bdone = "!f() { git checkout ${1-develop} && git up && git bclean ${1-develop}; }; f"
+	bcleanmaster = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
+	bdonemaster = "!f() { git checkout ${1-master} && git up && git bcleanmaster ${1-master}; }; f"
 	# Merge
 	mm = !git pull && git merge --no-ff
 	m = merge
@@ -71,6 +72,7 @@
 	# Fix issues, reset, etc
 	unstage = reset HEAD --
 	info = reflog
+	remove = !git rm —-cached $1 && git commit —-amend
 	resetdevelop = !git reset --hard $1 && git push -f origin develop
 	resetmaster = !git reset --hard $1 && git push -f origin master	
 	resetindex = reset HEAD@{$1}
@@ -86,7 +88,7 @@
 	path = C:/_Apps/Tools/kdiff3/kdiff3.exe
 [mergetool "p4merge"]
 	path = C:/_Apps/Tools/p4merge/p4merge.exe
-	cmd = p4merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+	cmd = p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
 	keepTemporaries = false
 	trustExitCode = false
 	keepBackup = false
@@ -99,12 +101,16 @@
 	path = C:/_Apps/Tools/kdiff3/kdiff3.exe
 [difftool "p4merge"]
 	path = C:/_tools/apps/p4merge/p4merge.exe
-	cmd = \"p4merge.exe $LOCAL $REMOTE\"
+	cmd = "p4merge.exe $LOCAL $REMOTE"
 [credential]
 	helper = store
+[credential "https://git01.eggits.net"]
+	username = vcat
 [credential "https://github.com"]
     username = katahV
 	useHttpPath = true
+[credential "https://schwarzit.visualstudio.com/"]
+    username = vcat
 	
 [winUpdater]
 	recentlySeenVersion = 2.20.1.windows.1
